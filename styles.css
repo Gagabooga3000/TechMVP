@@ -77,12 +77,21 @@ a{color:inherit;text-decoration:none}
 .plan{position:relative;background:var(--card);border:1px solid var(--stroke);border-radius:14px;padding:20px}
 .plan[data-tilt]{box-shadow:0 14px 40px rgba(0,0,0,.4)}
 .plan--pro{border-color:#195b4f;box-shadow:0 0 0 1px #195b4f inset, var(--shadow)}
+.plan__subtitle{color:var(--muted);font-size:14px;margin:-4px 0 12px;line-height:1.5}
+.plan__note{color:var(--muted);font-size:12px;text-align:center;margin-top:12px;line-height:1.5}
 .badge{position:absolute;top:12px;right:12px;background:#113c35;color:#a7ffeb;font-size:12px;padding:6px 8px;border-radius:999px;border:1px solid #1b6a5d}
 .price{font-size:28px;font-weight:700;margin:6px 0 8px}
 .price span{font-size:14px;color:var(--muted);font-weight:500}
 .features{list-style:none;padding:0;margin:12px 0 18px}
-.features li{padding-left:18px;position:relative;margin:8px 0;color:var(--muted)}
+.features li{padding-left:18px;position:relative;margin:8px 0;color:var(--muted);font-size:14px;line-height:1.6}
 .features li:before{content:"✔";position:absolute;left:0;top:0;color:var(--primary)}
+.features--negative li:before{content:"✗";color:#ef4444}
+/* Comparison */
+.comparison{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:24px}
+.comparison__item{background:var(--card);border:1px solid var(--stroke);border-radius:12px;padding:20px}
+.comparison__item--highlight{border-color:#195b4f;box-shadow:0 0 0 1px #195b4f inset}
+.comparison__item h3{margin:0 0 16px;font-size:20px}
+.comparison__item .features{margin:0}
 
 /* Testimonials */
 .testimonials{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -109,6 +118,8 @@ a{color:inherit;text-decoration:none}
 .form input{flex:1 1 260px;background:#0c131b;border:1px solid var(--stroke);border-radius:10px;color:var(--text);padding:12px 14px;outline:none}
 .form__hint{width:100%;color:var(--muted);font-size:12px;margin:6px 2px 0}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+.form input[type="text"],.form input[type="email"],.form input[type="password"],.form input[type="tel"],.form textarea,.form select{font-family:inherit;font-size:inherit}
+.form input:focus,.form textarea:focus,.form select:focus{outline:2px solid var(--primary);outline-offset:2px}
 
 /* Footer */
 .footer{background:#0a0f14;border-top:1px solid var(--stroke);padding:28px 0}
@@ -132,10 +143,29 @@ a{color:inherit;text-decoration:none}
   .cards{grid-template-columns:1fr}
   .grid-2{grid-template-columns:1fr}
   .pricing{grid-template-columns:1fr}
+  .comparison{grid-template-columns:1fr}
   .nav{position:fixed;inset:60px 0 auto 0;display:none;background:rgba(9,12,16,.98);border-bottom:1px solid var(--stroke);padding:12px 16px;gap:0}
   .nav a{display:block;padding:12px 8px;border-radius:8px}
   .nav.is-open{display:block}
   .nav-toggle{display:inline-block}
+}
+
+/* Modal */
+.modal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal__overlay{position:absolute;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);cursor:pointer}
+.modal__content{position:relative;background:var(--bg);border:1px solid var(--stroke);border-radius:16px;padding:32px;max-width:900px;max-height:90vh;overflow-y:auto;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.5);z-index:10001}
+.modal__close{position:absolute;top:16px;right:16px;background:transparent;border:0;color:var(--muted);font-size:32px;line-height:1;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;transition:.2s;z-index:10002}
+.modal__close:hover{background:var(--card);color:var(--text)}
+.modal__features{display:flex;flex-direction:column;gap:24px;margin-top:24px}
+.modal__feature{display:flex;gap:16px;padding:20px;background:var(--card);border:1px solid var(--stroke);border-radius:12px}
+.modal__feature-icon{font-size:32px;flex-shrink:0}
+.modal__feature h3{margin:0 0 8px;font-size:18px}
+.modal__feature p{color:var(--muted);margin:0 0 12px;font-size:14px;line-height:1.6}
+.modal__feature .features{margin:0;font-size:14px}
+@media (max-width: 720px){
+  .modal{padding:12px}
+  .modal__content{padding:24px 20px}
+  .modal__feature{flex-direction:column;gap:12px}
 }
 
 /* Respect reduced motion: tone down animations */

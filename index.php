@@ -42,11 +42,11 @@
           <a href="#pricing">Тарифы</a>
           <a href="#contacts">Контакты</a>
           <?php if (!empty($_SESSION['user_id'])): ?>
-            <a href="/profile.php">Профиль</a>
-            <a href="/logout.php">Выйти</a>
+            <a href="<?= DASHBOARD_PATH ?>profile.php">Профиль</a>
+            <a href="<?= AUTH_PATH ?>logout.php">Выйти</a>
           <?php else: ?>
-            <a href="/login.php">Войти</a>
-            <a href="/register.php">Регистрация</a>
+            <a href="<?= AUTH_PATH ?>login.php">Войти</a>
+            <a href="<?= AUTH_PATH ?>register.php">Регистрация</a>
           <?php endif; ?>
         </nav>
       </div>
@@ -64,7 +64,9 @@
               <a href="#demo" class="button button--ghost">Запросить демо-доступ</a>
             </div>
             <div style="margin-top:14px;max-width:560px">
-              <video src="" controls preload="none" style="width:100%;border-radius:12px;border:1px solid var(--stroke);background:#0b0f14" poster="https://dummyimage.com/800x450/0f1720/ffffff&text=Demo+Video" loading="lazy"></video>
+              <video src="<?= ASSETS_PATH ?>videos/Video.mp4" controls preload="none" style="width:100%;border-radius:12px;border:1px solid var(--stroke);background:#0b0f14">
+                Ваш браузер не поддерживает видео.
+              </video>
             </div>
           </div>
           <div class="hero__visual scene" aria-hidden="true">
@@ -106,25 +108,25 @@
               <span class="glow"></span>
               <div class="card__icon">⚡</div>
               <h3>Быстрый старт</h3>
-              <p>Выберите шаблон, добавьте УТП и подключите форму — готово.</p>
+              <p>Выберите шаблон из библиотеки MVP-лендингов под популярные ниши. Соберите презентабельный прототип за 30 минут вместо недели.</p>
             </div>
             <div class="card scene" data-tilt>
               <span class="glow"></span>
               <div class="card__icon">📈</div>
               <h3>Встроенная аналитика</h3>
-              <p>Смотрите конверсии кнопок и форм, улучшайте страницы на данных.</p>
+              <p>Просмотры, клики, заявки и конверсия. Видите результат гипотезы без установки сложных сервисов.</p>
             </div>
             <div class="card scene" data-tilt>
               <span class="glow"></span>
               <div class="card__icon">🔌</div>
               <h3>Интеграции</h3>
-              <p>Подключите почту, таблицы и мессенджеры — без кода.</p>
+              <p>Все заявки мгновенно уходят в ваш Telegram или CRM. Webhook в Notion, Trello, Zapier — без кода.</p>
             </div>
             <div class="card scene" data-tilt>
               <span class="glow"></span>
-              <div class="card__icon">🛡️</div>
-              <h3>Надёжность</h3>
-              <p>Адаптивный дизайн и высокая скорость загрузки из коробки.</p>
+              <div class="card__icon">📋</div>
+              <h3>Готовые шаблоны</h3>
+              <p>Чек-листы и шаблоны для питчей, писем и опросов. Не нужно выдумывать с нуля, просто адаптируйте под свой продукт.</p>
             </div>
           </div>
         </div>
@@ -141,9 +143,11 @@
               <h3>Базовый</h3>
               <div class="price">0₽ <span>/ 14 дней</span></div>
               <ul class="features">
-                <li>Готовый лендинг</li>
-                <li>Форма сбора e-mail</li>
-                <li>Базовая аналитика</li>
+                <li>1 лендинг по готовому шаблону</li>
+                <li>Базовая форма заявки на e-mail</li>
+                <li>Ограниченная кастомизация</li>
+                <li>Без аналитики</li>
+                <li>Лого TechMVP обязательно</li>
               </ul>
               <a href="#signup" class="button button--secondary">Начать бесплатно</a>
             </div>
@@ -151,17 +155,182 @@
               <span class="glow"></span>
               <div class="badge">Рекомендуем</div>
               <h3>Профессиональный</h3>
+              <p class="plan__subtitle">Для хакатонов, пет-проектов, стартапов на ранней стадии и студенческих команд</p>
               <div class="price">490₽ <span>/ месяц</span></div>
               <ul class="features">
-                <li>Все из Базового</li>
-                <li>Интеграции (Google Sheets, Telegram)</li>
-                <li>Событийная аналитика</li>
+                <li>До 10 проектов в одном аккаунте</li>
+                <li>10+ готовых нишевых шаблонов (SaaS, AI, маркетплейс, бронирования и др.)</li>
+                <li>Встроенная аналитика: показы, клики, заявки, конверсия</li>
+                <li>Интеграции: Telegram, кастомный e-mail, Webhook</li>
+                <li>Шаблоны писем, опросников и pitch deck</li>
+                <li>Кастомные домены/поддомены</li>
+                <li>Удаление логотипа TechMVP</li>
+                <li>Доступ к гайдам и приоритетной поддержке</li>
               </ul>
-              <a href="#signup" class="button button--primary">Выбрать тариф</a>
+              <?php if (!empty($_SESSION['user_id'])): ?>
+              <a href="<?= DASHBOARD_PATH ?>payment.php" class="button button--primary">Выбрать Профессиональный</a>
+              <?php else: ?>
+              <a href="<?= AUTH_PATH ?>register.php" class="button button--primary">Выбрать Профессиональный</a>
+              <?php endif; ?>
+              <p class="plan__note">Всего 490 ₽ — дешевле одной доставки, но с шансом запустить свой продукт</p>
+              <button type="button" class="button button--ghost" style="width: 100%; margin-top: 12px;" onclick="openProModal()">Подробнее о функциях →</button>
             </div>
           </div>
         </div>
       </section>
+
+      <!-- Why 490 is worth it -->
+      <section class="section" id="why-worth" aria-label="Почему это выгодно">
+        <div class="container">
+          <h2>Почему 490 ₽ — выгодно?</h2>
+          <p class="section__lead">490 ₽ — это не «ещё один сервис», а быстрый способ проверить гипотезу за выходные: готовые шаблоны, аналитика, интеграции и минимальный геморрой.</p>
+          <div class="comparison">
+            <div class="comparison__item">
+              <h3>Сделать самому</h3>
+              <ul class="features features--negative">
+                <li>Верстальщик: 5 000–15 000 ₽</li>
+                <li>Неделя на дизайн и разработку</li>
+                <li>Настройка аналитики отдельно</li>
+                <li>Интеграции требуют времени и знаний</li>
+                <li>Риск потерять фокус на продукте</li>
+              </ul>
+            </div>
+            <div class="comparison__item comparison__item--highlight">
+              <h3>TechMVP Pro</h3>
+              <ul class="features">
+                <li>Всё уже собрано: лендинг, форма, аналитика, интеграции</li>
+                <li>Запуск за вечер вместо недели</li>
+                <li>Готовые шаблоны под популярные ниши</li>
+                <li>Встроенная аналитика из коробки</li>
+                <li>Фокус на проверке гипотезы, а не на технике</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pro Features Modal -->
+      <div id="proModal" class="modal" style="display: none;">
+        <div class="modal__overlay" onclick="closeProModal()"></div>
+        <div class="modal__content">
+          <button class="modal__close" onclick="closeProModal()" aria-label="Закрыть">×</button>
+          <h2>Что входит в Профессиональный тариф за 490 ₽/мес</h2>
+          <p class="section__lead">TechMVP — сервис для проверки гипотез. За 490 ₽ в месяц вы получаете полный набор инструментов для запуска MVP.</p>
+          
+          <div class="modal__features">
+            <div class="modal__feature">
+              <div class="modal__feature-icon">🚀</div>
+              <div>
+                <h3>1. Мультипроекты и гибкость</h3>
+                <p>Можно параллельно тестировать несколько идей, выглядеть «как взрослые».</p>
+                <ul class="features">
+                  <li>До 10 проектов (лендингов) в одном аккаунте</li>
+                  <li>Поддомены вида idea.techmvp.site</li>
+                  <li>Дополнительные секции и раскладки (кейсы, FAQ, сравнение тарифов, формы)</li>
+                  <li>Удаление логотипа TechMVP (white label)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="modal__feature">
+              <div class="modal__feature-icon">📚</div>
+              <div>
+                <h3>2. Библиотека готовых MVP-шаблонов</h3>
+                <p>Экономит часы на структуре и формулировках, особенно новичкам. Каждый шаблон: уже продуманная структура блоков + демо-тексты, которые можно переписать.</p>
+                <ul class="features">
+                  <li>SaaS-сервис</li>
+                  <li>AI-сервис</li>
+                  <li>Образовательный продукт</li>
+                  <li>Мобильное приложение</li>
+                  <li>Консалтинг / агентство</li>
+                  <li>Simple marketplace</li>
+                  <li>Сервис бронирований</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="modal__feature">
+              <div class="modal__feature-icon">📊</div>
+              <div>
+                <h3>3. Встроенная аналитика</h3>
+                <p>Пользователь видит, «стреляет гипотеза или нет», без Google Analytics и плясок.</p>
+                <ul class="features">
+                  <li>Количество визитов</li>
+                  <li>Клики по кнопкам (CTA)</li>
+                  <li>Отправленные заявки</li>
+                  <li>Базовая конверсия</li>
+                  <li>Простое разделение источников (по UTM: social / direct / ads и т.п.)</li>
+                  <li>Возможность подключить свои пиксели и счётчики (Яндекс.Метрика, GA4)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="modal__feature">
+              <div class="modal__feature-icon">🔌</div>
+              <div>
+                <h3>4. Интеграции для реальной работы</h3>
+                <p>Не просто «форма», а нормальный рабочий поток заявок.</p>
+                <ul class="features">
+                  <li>Отправка заявок в Telegram (бот/чат)</li>
+                  <li>Отправка на кастомный e-mail (команда/фаундер)</li>
+                  <li>Webhook в Notion/Trello/CRM</li>
+                  <li>Подключение своих пикселей и счётчиков</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="modal__feature">
+              <div class="modal__feature-icon">📋</div>
+              <div>
+                <h3>5. Шаблоны и материалы</h3>
+                <p>Помогает не только собрать сайт, но и правильно коммуницировать и собирать обратную связь.</p>
+                <ul class="features">
+                  <li>Шаблоны писем первым пользователям: «Расскажите, что думаете о нашем MVP»</li>
+                  <li>Письмо потенциальному клиенту</li>
+                  <li>Письмо ментору/эксперту</li>
+                  <li>Шаблон мини-pitch deck (под акселератор / конкурс / инвестора)</li>
+                  <li>Шаблон опроса для проверки гипотезы (Google Forms/Typeform)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="modal__feature">
+              <div class="modal__feature-icon">🤖</div>
+              <div>
+                <h3>6. AI-ассистент по текстам</h3>
+                <p>Снимает страх «я не копирайтер, не знаю, как написать».</p>
+                <ul class="features">
+                  <li>Подсказки заголовков</li>
+                  <li>Варианты УТП по нише</li>
+                  <li>Автогенерация черновика текста блоков</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="modal__feature">
+              <div class="modal__feature-icon">💬</div>
+              <div>
+                <h3>7. Поддержка и комьюнити</h3>
+                <p>Ощущение, что человек не один, а с «навигацией».</p>
+                <ul class="features">
+                  <li>Приоритетные ответы (e-mail/Telegram)</li>
+                  <li>Мини-гайды: «Как запустить рекламу на 300–500 ₽ и собрать первые клики»</li>
+                  <li>«Как читать конверсию»</li>
+                  <li>«Что делать после первых 10 лидов»</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--stroke);">
+            <?php if (!empty($_SESSION['user_id'])): ?>
+            <a href="<?= DASHBOARD_PATH ?>payment.php" class="button button--primary" onclick="closeProModal()">Выбрать Профессиональный</a>
+            <?php else: ?>
+            <a href="<?= AUTH_PATH ?>register.php" class="button button--primary" onclick="closeProModal()">Выбрать Профессиональный</a>
+            <?php endif; ?>
+          </div>
+        </div>
+      </div>
 
       <!-- Social Proof -->
       <section class="section" id="social" aria-label="Социальное доказательство">
@@ -193,17 +362,17 @@
           <h2>Команда</h2>
           <div class="team">
             <div class="member">
-              <img src="https://images.unsplash.com/photo-1544006659-f0b21884ce1d?q=80&w=600&auto=format&fit=crop" alt="Анна — Продакт" loading="lazy" />
+              <img src="<?= ASSETS_PATH ?>images/хз.PNG" alt="Анна — Продакт" loading="lazy" />
               <h4>Анна</h4>
               <p class="section__lead">Product</p>
             </div>
             <div class="member">
-              <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=600&auto=format&fit=crop" alt="Илья — Разработчик" loading="lazy" />
+              <img src="<?= ASSETS_PATH ?>images/Илья.PNG" alt="Илья — Разработчик" loading="lazy" />
               <h4>Илья</h4>
               <p class="section__lead">Developer</p>
             </div>
             <div class="member">
-              <img src="https://images.unsplash.com/photo-1546525848-3ce03ca516f6?q=80&w=600&auto=format&fit=crop" alt="Марина — Дизайнер" loading="lazy" />
+              <img src="<?= ASSETS_PATH ?>images/Мария.PNG" alt="Марина — Дизайнер" loading="lazy" />
               <h4>Марина</h4>
               <p class="section__lead">Designer</p>
             </div>
@@ -249,10 +418,10 @@
             <input id="email" name="email" type="email" placeholder="Ваш e-mail" required />
             <label style="display:flex;gap:8px;align-items:flex-start;color:var(--muted);font-size:12px;">
               <input type="checkbox" required style="margin-top:4px;" />
-              <span>Я соглашаюсь с <a href="/privacy.html">политикой конфиденциальности</a> и <a href="/terms.html">условиями использования</a>.</span>
+              <span>Я соглашаюсь с <a href="<?= PAGES_PATH ?>privacy.html">политикой конфиденциальности</a> и <a href="<?= PAGES_PATH ?>terms.html">условиями использования</a>.</span>
             </label>
             <button type="submit" class="button button--primary">Получить доступ</button>
-            <p class="form__hint">Отправляя форму, вы соглашаетесь с <a href="/privacy.html">политикой конфиденциальности</a>.</p>
+            <p class="form__hint">Отправляя форму, вы соглашаетесь с <a href="<?= PAGES_PATH ?>privacy.html">политикой конфиденциальности</a>.</p>
           </form>
         </div>
       </section>
@@ -273,7 +442,7 @@
         <div class="footer__links">
           <a href="mailto:team@example.com">fantapavel16@gmail.com</a>
           <a href="https://t.me/yourteam" target="_blank" rel="noopener">Telegram</a>
-          <a href="/privacy.html">Политика конфиденциальности</a>
+          <a href="<?= PAGES_PATH ?>privacy.html">Политика конфиденциальности</a>
         </div>
       </div>
     </footer>
@@ -283,7 +452,7 @@
 
     <div class="cookie-banner" id="cookieBanner" style="position:fixed;left:16px;right:16px;bottom:16px;background:#0f1720;border:1px solid var(--stroke);border-radius:12px;padding:12px 14px;display:none;z-index:200;box-shadow:0 10px 30px rgba(0,0,0,.35)">
       <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between">
-        <div style="color:var(--muted);max-width:720px">Мы используем файлы cookie и аналитику для улучшения сервиса. Подробнее в <a href="/privacy.html">политике конфиденциальности</a>.</div>
+        <div style="color:var(--muted);max-width:720px">Мы используем файлы cookie и аналитику для улучшения сервиса. Подробнее в <a href="<?= PAGES_PATH ?>privacy.html">политике конфиденциальности</a>.</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="button button--secondary" data-cookie-reject>Отклонить</button>
           <button class="button button--primary" data-cookie-accept>Согласиться</button>
@@ -291,6 +460,23 @@
       </div>
     </div>
 
+    <script>
+      // Define functions immediately to avoid timing issues
+      function openProModal() {
+        const modal = document.getElementById('proModal');
+        if (modal) {
+          modal.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+        }
+      }
+      function closeProModal() {
+        const modal = document.getElementById('proModal');
+        if (modal) {
+          modal.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      }
+    </script>
     <script src="script.js"></script>
   </body>
   </html>

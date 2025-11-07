@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /backend/
+Disallow: /dashboard/
+Disallow: /projects/edit.php
+Disallow: /projects/create.php
+Disallow: /api/
+
+Sitemap: https://www.elektrika.site/sitemap.xml
+

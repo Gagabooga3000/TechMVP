@@ -38,11 +38,57 @@ function verify_csrf_token(?string $token): bool {
     return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], (string)$token);
 }
 
+// Base paths
+define('BASE_PATH', '/');
+define('AUTH_PATH', BASE_PATH . 'auth/');
+define('DASHBOARD_PATH', BASE_PATH . 'dashboard/');
+define('PROJECTS_PATH', BASE_PATH . 'projects/');
+define('API_PATH', BASE_PATH . 'api/');
+define('PAGES_PATH', BASE_PATH . 'pages/');
+define('ASSETS_PATH', BASE_PATH . 'assets/');
+define('ADMIN_PATH', BASE_PATH . 'admin/');
+
 function require_auth(): void {
     start_session_once();
     if (empty($_SESSION['user_id'])) {
-        header('Location: /login.php');
+        header('Location: ' . AUTH_PATH . 'login.php');
         exit;
+    }
+}
+
+function require_admin(): void {
+    require_auth();
+    start_session_once();
+    $pdo = db_get_pdo();
+    $stmt = $pdo->prepare('SELECT is_admin FROM users WHERE id = ?');
+    $stmt->execute([$_SESSION['user_id']]);
+    $user = $stmt->fetch();
+    if (empty($user['is_admin'])) {
+        header('Location: ' . DASHBOARD_PATH . 'profile.php');
+        exit;
+    }
+}
+
+function log_activity(string $action, ?string $entityType = null, ?int $entityId = null, ?array $details = null): void {
+    try {
+        $pdo = db_get_pdo();
+        $userId = $_SESSION['user_id'] ?? null;
+        $ip = $_SERVER['REMOTE_ADDR'] ?? null;
+        $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? null;
+        
+        $stmt = $pdo->prepare('INSERT INTO activity_logs (user_id, action, entity_type, entity_id, details, ip_address, user_agent) VALUES (?, ?, ?, ?, ?, ?, ?)');
+        $stmt->execute([
+            $userId,
+            $action,
+            $entityType,
+            $entityId,
+            $details ? json_encode($details, JSON_UNESCAPED_UNICODE) : null,
+            $ip,
+            $userAgent
+        ]);
+    } catch (Throwable $e) {
+        // Логирование не должно ломать основной функционал
+        error_log('Activity log error: ' . $e->getMessage());
     }
 }
 

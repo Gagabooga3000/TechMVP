@@ -144,4 +144,48 @@ if (form) {
   });
 })();
 
+// Pro Modal - make functions globally available
+window.openProModal = function() {
+  const modal = document.getElementById('proModal');
+  if (modal) {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  } else {
+    console.error('Modal element not found');
+  }
+};
+
+window.closeProModal = function() {
+  const modal = document.getElementById('proModal');
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+};
+
+// Also add event listener for reliability
+document.addEventListener('DOMContentLoaded', function() {
+  const proModalBtn = document.querySelector('button[onclick*="openProModal"]');
+  if (proModalBtn) {
+    proModalBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (typeof window.openProModal === 'function') {
+        window.openProModal();
+      }
+    });
+  }
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (typeof window.closeProModal === 'function') {
+      window.closeProModal();
+    } else if (typeof closeProModal === 'function') {
+      closeProModal();
+    }
+  }
+});
+
 
